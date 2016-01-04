@@ -75,7 +75,7 @@ To these variables, we should add those related to personal information, such as
   
 <br>* The target variable ('Response') is an ordinal variable that is unbalanced in the number of cases present in the training data set.
 
-A detailed description of the findings in the exploratory analysis of all these features can be found in these document [EDA](eda.html). 
+A detailed description of the findings in the exploratory analysis of all these features can be found in these document [EDA](https://github.com/GuySK/uow-dss-1/blob/master/eda.md). 
 
 ### Initial approach
 
@@ -95,7 +95,7 @@ Following these initial definitions I tried fitting a 'lasso' model, since it al
 
 Unfortunately, the *LASSO* proved to be too slow in this case, so I decided to switch to a tree-based boosting method implemented by the *xgboost* package in R, well-known for its high performance, parallel processing characteristics.
 
-The script used to train the LASSO model can be found [here](./code/lasso_2.R). It is worth mentioning that on top of being slow, the LASSO scored just 0.50, far below the first results I obtained with my first boosting approaches. 
+The script used to train the LASSO model can be found [here](https://github.com/GuySK/uow-dss-1/blob/master/lasso_2.R). It is worth mentioning that on top of being slow, the LASSO scored just 0.50, far below the first results I obtained with my first boosting approaches. 
 
 #### Data pre-processing
 
@@ -104,11 +104,11 @@ In order to fit a linear regression model it is important to take into account t
 1. Missing values should be eliminated from the training and testing sets.
 1. Independent variables must be encoded as either numeric or categorical variables to be handled efficiently by the training algorithm.
 
-In summary, I decided to suppress from the training data set variables that presented a significant number of missing values. A second important decision was to use the one-hot encoding format for factor variables, to allow for a better management of possible interactions by the algorithm. [This script](./code/data_trf_lasso.R) contains the code to accomplish those objectives. 
+In summary, I decided to suppress from the training data set variables that presented a significant number of missing values. A second important decision was to use the one-hot encoding format for factor variables, to allow for a better management of possible interactions by the algorithm. [This script](https://github.com/GuySK/uow-dss-1/blob/master/data_trf_lasso.R) contains the code to accomplish those objectives. 
 
 #### First results with xgboost
 
-The first results with this model can be found in [this document](xgboost_2.html). Score was up to 0.57 with a small improvement over the LASSO model.
+The first results with this model can be found in [this document](https://github.com/GuySK/uow-dss-1/blob/master/xgboost_2.md). Score was up to 0.57 with a small improvement over the LASSO model.
 
 There are several points to start working with from now on, assuming the xgboost is our model of choice. *xgboost* has several parameters to optimize. As it can be seen from the log in the previous run, the parameter NROUNDS that control the number of trees to grow to reduce approximate the target value (in our case the residuals, since we're doint a liner regression). It is very important to set up the correct value to this parameter to avoid overfitting the data. In the previous script, NROUNDS were chosen by cross-validating it using the function *xgb.cv* provided by the **XGBOOST** R package.
 
@@ -118,7 +118,7 @@ Boosting is a technique that basically consists in growing trees sequentially to
 
 In order to select these parameters, I wrote a script for cross-validate them and tune them in sequence. It could have been theoretically possible to use a grid selection process like the one provided by the package *CARET* but the number of alternatives and the computational requirements on my computer would have been to much.
 
-The script for tuning these parameters can be found [here](xgboost_3.html).
+The script for tuning these parameters can be found [here](https://github.com/GuySK/uow-dss-1/blob/master/xgboost_3.md).
 
 ### Next steps
 
@@ -131,7 +131,7 @@ There are still several ways to try to improve the model's results. Among them:
 
 I will continue this research since the competition deadline is still months away. Unfortunately, the deadline for this assignment has not allowed for time to achieve better results in this particularly tough problem (the leader in the competition has achieved so far a score of 0.68). 
 
-In my last attempts at reducing the dimensionality of the problem I achieved a score just above 0.58 by replacing the Medical Keywords by their first ten principal components. The script used for this purpose can be inspect [here](./code/xgboost_4.R).
+In my last attempts at reducing the dimensionality of the problem I achieved a score just above 0.58 by replacing the Medical Keywords by their first ten principal components. The script used for this purpose can be inspect [here](https://github.com/GuySK/uow-dss-1/blob/master/xgboost_4.R).
 
 
 
